@@ -1,0 +1,14 @@
+{
+  "name": "hello-fly",
+  "version": "1.0.0",
+  "description": "Hello World on Fly.io",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "health": "node -e \"fetch('http://localhost:8080/health').then(r=>{if(r.ok)process.exit(0);process.exit(1)}).catch(()=>process.exit(1))\""
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
