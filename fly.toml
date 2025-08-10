@@ -1,0 +1,15 @@
+app = "javi-flask-demo"       # Este nombre debe ser único globalmente
+primary_region = "mad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  processes = ["app"]
