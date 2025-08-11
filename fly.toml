@@ -1,0 +1,18 @@
+app = "stealer-phone"  # 👈 Asegúrate de que coincida con el nombre real de tu app
+
+primary_region = "mad"  # 🇪🇸 Fuerza despliegue en Madrid
+
+[http_service]
+  internal_port = 8080
+  auto_start_machines = true
+  auto_stop_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [[http_service.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[http_service.ports]]
+    handlers = ["tls", "http"]
+    port = 443
