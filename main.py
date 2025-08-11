@@ -1,17 +1,19 @@
 import os
+import time
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-import time
 
-# 🔐 Obtenemos las credenciales desde los secrets
-api_id = int(os.getenv("API_ID"))
-api_hash = os.getenv("API_HASH")
+# Leer los secrets desde Fly.io
+API_ID = int(os.getenv("API_ID"))
+API_HASH = os.getenv("API_HASH")
 
-print("✅ Script iniciado, generando STRING_SESSION...")
+print("🚀 Iniciando generación de STRING_SESSION...")
 
-with TelegramClient(StringSession(), api_id, api_hash) as client:
-    string_session = client.session.save()
-    print(f"\n🔐 STRING_SESSION generado:\n{string_session}\n")
+with TelegramClient(StringSession(), API_ID, API_HASH) as client:
+    string = client.session.save()
+    print("\n🔑 STRING_SESSION generado correctamente:\n")
+    print(string)
+    print("\n✅ Fin del proceso. Puedes copiar la sesión y volver a tu código normal.")
 
-# ⏳ Mantener vivo el proceso para que Fly.io no lo mate antes de capturar logs
+# Mantener el contenedor vivo unos segundos para que Fly lo registre
 time.sleep(30)
