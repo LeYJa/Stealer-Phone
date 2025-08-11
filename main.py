@@ -1,19 +1,14 @@
-import os
-import time
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
+import os
 
-# Leer los secrets desde Fly.io
-API_ID = int(os.getenv("API_ID"))
-API_HASH = os.getenv("API_HASH")
+# Carga de credenciales desde los secretos
+api_id = int(os.getenv("API_ID"))
+api_hash = os.getenv("API_HASH")
+string_session = os.getenv("STRING_SESSION")
+chat_id = os.getenv("CHAT_ID")         # Username o ID del grupo, ej: "@MiGrupo"
+topic_id = int(os.getenv("TOPIC_ID"))  # ID del tema donde queremos publicar
 
-print("🚀 Iniciando generación de STRING_SESSION...")
-
-with TelegramClient(StringSession(), API_ID, API_HASH) as client:
-    string = client.session.save()
-    print("\n🔑 STRING_SESSION generado correctamente:\n")
-    print(string)
-    print("\n✅ Fin del proceso. Puedes copiar la sesión y volver a tu código normal.")
-
-# Mantener el contenedor vivo unos segundos para que Fly lo registre
-time.sleep(30)
+# Inicializar y enviar mensaje dentro del topic
+with TelegramClient(StringSession(string_session), api_id, api_hash) as client:
+    client.send_message(chat_id, "Hello World 👋", reply_to=topic_id)
