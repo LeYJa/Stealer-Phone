@@ -1,14 +1,19 @@
+import os
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-import os
 
-# Carga de credenciales desde los secretos
-api_id = int(os.getenv("API_ID"))
-api_hash = os.getenv("API_HASH")
+# Validación de entorno
 string_session = os.getenv("STRING_SESSION")
-chat_id = os.getenv("CHAT_ID")         # Username o ID del grupo, ej: "@MiGrupo"
-topic_id = int(os.getenv("TOPIC_ID"))  # ID del tema donde queremos publicar
+api_id = os.getenv("API_ID")
+api_hash = os.getenv("API_HASH")
 
-# Inicializar y enviar mensaje dentro del topic
-with TelegramClient(StringSession(string_session), api_id, api_hash) as client:
-    client.send_message(chat_id, "Hello World 👋", reply_to=topic_id)
+# Validaciones básicas
+if not string_session or len(string_session) < 100:
+    raise ValueError("❌ STRING_SESSION no válido o demasiado corto.")
+if not api_id or not api_hash:
+    raise ValueError("❌ API_ID o API_HASH no definidos.")
+
+# Inicializar cliente
+with TelegramClient(StringSession(string_session), int(api_id), api_hash) as client:
+    me = client.get_me()
+    print(f"✅ Sesión iniciada como: {me.username} (ID: {me.id})")
