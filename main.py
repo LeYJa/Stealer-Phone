@@ -2,18 +2,17 @@ import os
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 
-# Validación de entorno
+# Cargar la sesión desde las variables de entorno
 string_session = os.getenv("STRING_SESSION")
-api_id = os.getenv("API_ID")
-api_hash = os.getenv("API_HASH")
 
-# Validaciones básicas
-if not string_session or len(string_session) < 100:
-    raise ValueError("❌ STRING_SESSION no válido o demasiado corto.")
-if not api_id or not api_hash:
-    raise ValueError("❌ API_ID o API_HASH no definidos.")
+# ✅ Validación y reporte
+if not string_session:
+    raise ValueError("❌ STRING_SESSION no está definido.")
+elif len(string_session) < 275:
+    raise ValueError(f"❌ STRING_SESSION demasiado corto ({len(string_session)} caracteres). Se esperan al menos 275.")
+else:
+    print(f"✅ STRING_SESSION cargado correctamente ({len(string_session)} caracteres).")
 
-# Inicializar cliente
-with TelegramClient(StringSession(string_session), int(api_id), api_hash) as client:
-    me = client.get_me()
-    print(f"✅ Sesión iniciada como: {me.username} (ID: {me.id})")
+# Crear el cliente solo si el string es válido
+with TelegramClient(StringSession(string_session), api_id, api_hash) as client:
+    print("📡 Cliente conectado correctamente.")
