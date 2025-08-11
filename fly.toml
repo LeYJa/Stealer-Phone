@@ -1,6 +1,6 @@
 app = "stealer-phone"  # 👈 Asegúrate de que coincida con el nombre real de tu app
 
-primary_region = "mad"  # 🇪🇸 Fuerza despliegue en Madrid
+primary_region = "cdg"  # 🇪🇸 Fuerza despliegue en Madrid
 
 [http_service]
   internal_port = 8080
